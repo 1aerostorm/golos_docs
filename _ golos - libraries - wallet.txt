@@ -1,0 +1,4 @@
+== /golos/libraries/wallet/wallet.cpp:
+
+Here is the wallet_api_impl class which contains an implementation for all commands running in cli_wallet, for instance wallet_api::vote for "vote" command. 
+Could be used to see what cli_wallet does when it sending each command to daemon's database_api.

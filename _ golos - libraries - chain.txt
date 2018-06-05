@@ -1,0 +1,10 @@
+== /golos/libraries/chain/database.cpp:
+
+There are methods which work with the main blockchain database.
+
+Also, there is cashout with reward operations. 
+database::cashout_comment_helper() pushes the reward operations.
+
+== /golos/libraries/chain/***:
+
+Also, there are all db objects. For instance, there is the comment object in /golos/libraries/chain/include/golos/chain/comment_object.hpp

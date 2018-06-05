@@ -1,0 +1,30 @@
+Rev. v0.18.0, 04.06.2018
+
+./cli_wallet --server-rpc-endpoint=ws://127.0.0.1:8091
+set_password qwer
+unlock qwer
+import_key 5JVFFWRLwz6JoP9kguuRFfytToGU6cLgBVTL9t6NB3D3BQLbUBS
+create_account cyberfounder test "{}" "30.000 GOLOS" true
+transfer_to_vesting cyberfounder test "30.000 GOLOS" true
+post_comment  test test "" test hello world "{}" true
+
+create_account cyberfounder test2 "{}" "30.000 GOLOS" true
+transfer_to_vesting cyberfounder test2 "30.000 GOLOS" true
+post_comment  test2 test2 "" test2 hello world "{}" true
+
+create_account cyberfounder test3 "{}" "30.000 GOLOS" true
+transfer_to_vesting cyberfounder test3 "30.000 GOLOS" true
+post_comment  test3 test3 test test hello world "{}" true
+
+create_account cyberfounder test4 "{}" "30.000 GOLOS" true
+transfer_to_vesting cyberfounder test4 "30.000 GOLOS" true
+post_comment  test4 test4 test2 test2 hello world "{}" true
+
+create_account cyberfounder test5 "{}" "30.000 GOLOS" true
+transfer_to_vesting cyberfounder test5 "30.000 GOLOS" true
+post_comment  test5 test5 test4 test4 hello world "{}" true
+
+Result in Mongo:
+#5 and #4 have the same "root_comment" value, and also this value is same as "_id" of #2.
+#3 has "root_comment" value same as "_id" of #1.
+And these two root_comment values are NOT same.

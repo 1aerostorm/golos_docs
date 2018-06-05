@@ -1,0 +1,123 @@
+
+Rev. v0.18.0, 04.06.2018
+
+============== 0. What is it and how it works:
+
+These tests are intented for testing the functionality on MongoDB plugin in the testnet, but also could be using for another purposes i.e. testing main blockchain database.
+
+You should run all the following tests ("Post+post", "post+delete" and etc.)
+Before running each test you should:
+- stop the golosd if running;
+- remove blockchain folder;
+- drop the Golos db;
+- also it's recommended to drop wallet.json file;
+- start the golosd: cd /programs/golosd, ./golosd (use 3rd terminal where you willn't call cli_wallet commands, because you cannot call some commands in terminal where golosd running)
+
+TIP: Do not go to cli_wallets instantly after golosd started. It can cause errors in cli_wallets. Wait the few seconds.
+
+============== 1. Post+post:
+
+Have 1 terminal with running golosd daemin (cd build/programs/golosd, ./golosd)
+Next open 2 terminals with cd to build/programs/cli_wallet.
+TIP: if using SSH - also use VNC: 1st cli_wallet terminal will be in SSH, 2nd cli_wallet - in the VNC, golosd's terminal - in the VNC, too.
+
+Run the 1st terminal and paste following, but don't run last command (paste without last newline), last command should wait Enter pressing:
+
+./cli_wallet --server-rpc-endpoint=ws://127.0.0.1:8091
+set_password qwer
+unlock qwer
+import_key 5JVFFWRLwz6JoP9kguuRFfytToGU6cLgBVTL9t6NB3D3BQLbUBS
+create_account cyberfounder test "{}" "30.000 GOLOS" true
+transfer_to_vesting cyberfounder test "30.000 GOLOS" true
+post_comment  test test "" test hello world "{}" true
+
+Run the 2nd terminal and paste following, also without last newline:
+
+./cli_wallet --server-rpc-endpoint=ws://127.0.0.1:8091
+set_password qwer
+unlock qwer
+import_key 5JVFFWRLwz6JoP9kguuRFfytToGU6cLgBVTL9t6NB3D3BQLbUBS
+create_account cyberfounder test2 "{}" "30.000 GOLOS" true
+transfer_to_vesting cyberfounder test2 "30.000 GOLOS" true
+post_comment  test2 test "" test hello world "{}" true
+
+Place 2 windows in such orders to fast press Enter in 1st + 2nd.
+Wait for new block in golosd log.
+And press 1st and 2nd!
+
+Result: 2 comment_objects in the MongoDB. No errors in log.
+
+============== 2. Post+delete.
+
+Intended to check the deletion when post is not yet created.
+
+1st:
+
+./cli_wallet --server-rpc-endpoint=ws://127.0.0.1:8091
+set_password qwer
+unlock qwer
+import_key 5JVFFWRLwz6JoP9kguuRFfytToGU6cLgBVTL9t6NB3D3BQLbUBS
+create_account cyberfounder test "{}" "30.000 GOLOS" true
+transfer_to_vesting cyberfounder test "30.000 GOLOS" true
+post_comment  test test "" test hello world "{}" true
+
+2nd:
+
+begin_builder_transaction 
+add_operation_to_builder_transaction 0 ["delete_comment", {"author":"test","permlink":"test"}]
+sign_builder_transaction 0 true
+
+Wait for new block in golosd log. And press 1st, 2nd!
+
+Result: comment_object created, has "removed": true field, but hasn't all fields 
+
+============== 3. Post+delete-waiting.
+
+Run only 1 terminal for cli_wallet.
+
+Paste following AND press Enter immediately:
+
+./cli_wallet --server-rpc-endpoint=ws://127.0.0.1:8091
+set_password qwer
+unlock qwer
+import_key 5JVFFWRLwz6JoP9kguuRFfytToGU6cLgBVTL9t6NB3D3BQLbUBS
+create_account cyberfounder test "{}" "30.000 GOLOS" true
+transfer_to_vesting cyberfounder test "30.000 GOLOS" true
+post_comment  test test "" test hello world "{}" true
+
+Wait until comment_object will appear in the MongoDB.
+
+After it, paste AND execute:
+
+begin_builder_transaction 
+add_operation_to_builder_transaction 0 ["delete_comment", {"author":"test","permlink":"test"}]
+sign_builder_transaction 0 true
+
+Result: comment_object has all fields and the "removed" field.
+
+============== 4. Post+vote, post+vote-waiting.
+
+Same as post+delete, and post+delete-waiting, but instead of delete using following:
+
+create_account cyberfounder testg "{}" "30.000 GOLOS" true
+transfer_to_vesting cyberfounder testg "30.000 GOLOS" true
+vote testg test test -10 true
+
+Result: comment_vote_object; comment_object has "net_votes" field changed, "abs_rshares" field changed, etc.
+
+TIP: if you using negative vote, i.e. -10 in example,  you can next test delete comment after 30-90 minutes.
+If you uisng 10 you couldn't delete comment, but could also test rewards.
+
+=============== 5. Vote+vote.
+
+Same as post+post, but use 2 voting terminals (with different account names).
+
+Result: 2 comment_vote_objects; comment_object has "net_votes" field changed according both, "abs_rshares" field changed according both, etc. 
+
+=============== 6. Rewards.
+
+Same as the Post+vote (with positive vote, i.e. 10 nor -10), but after comment vote wrote also call following:
+
+publish_feed cyberfounder {"base": "1.000 GBG", "quote": "10.000 GOLOS"} true
+
+And wait for 2 minutes (!!!you should firstly set this interval, see "_ golos - libraries - protocol.txt"!!!)

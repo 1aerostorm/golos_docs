@@ -1,0 +1,135 @@
+﻿
+1. Монгу ставим к себе на хост:
+sudo apt-get install mongodb
+
+2. 
+sudo systemctl status mongodb
+Если не active, то:
+sudo systemctl start mongodb
+
+2.1. В /etc/mongo.conf меняем bind_ip на 172.17.0.1 или просто на 0.0.0.0 (это нужно для Docker) и перезапускаем
+sudo systemctl restart mongodb
+
+2.2. Теперь устанавливаем Docker:
+sudo apt-get update
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+sudo apt-get update
+sudo apt-get install -y docker-engine
+
+3.
+git clone -b 0.18.0-mongo-db-plugin https://github.com/GolosChain/golos
+cd golos
+
+4. 
+sudo docker build -t goloschain/golos -f share/golosd/docker/Dockerfile-testnet .
+
+5. 
+Команда запуска:
+sudo docker run -d \
+    -p 4243:4243 -p 8090:8090 -p 8091:8091 \
+    -v /etc/golosd:/etc/golosd \
+    -v /var/lib/golosd:/var/lib/golosd/ \
+    --name golos-default \
+    goloschain/golos
+
+6. Чтобы смотреть лог:
+sudo docker logs --tail 10 -f golos-default
+
+7. Остановка:
+sudo docker stop golos-default
+docker rm golos-default
+
+8. Для полной очистки перед повторным билдом нужно остановить, а также:
+docker image rm goloschain/golos
+
+9. Насчет cli_wallet. Для этого надо собрать проект еще и на хосте:
+sudo apt-get install -y \
+        autoconf \
+        automake \
+        autotools-dev \
+        bsdmainutils \
+        build-essential \
+        cmake \
+        doxygen \
+        git \
+        ccache\
+        libboost-all-dev \
+        libreadline-dev \
+        libssl-dev \
+        libtool \
+        ncurses-dev \
+        pbzip2 \
+        pkg-config \
+        python3 \
+        python3-dev \
+        python3-pip \
+        runit
+sudo pip3 install gcovr
+
+sudo apt-get -qq update
+sudo apt-get install -y pkg-config libssl-dev libsasl2-dev wget
+wget https://github.com/mongodb/mongo-c-driver/releases/download/1.9.5/mongo-c-driver-1.9.5.tar.gz
+tar xzf mongo-c-driver-1.9.5.tar.gz
+cd mongo-c-driver-1.9.5
+./configure --disable-automatic-init-and-cleanup --enable-static
+make
+sudo make install
+cd ..
+rm -rf mongo-c-driver-1.9.5
+echo "Installing mongo-cxx-driver"
+git clone https://github.com/mongodb/mongo-cxx-driver.git --branch releases/v3.2 --depth 1
+cd mongo-cxx-driver/build
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local ..
+sudo make EP_mnmlstc_core
+make
+sudo make install
+cd ../..
+rm -rf mongo-cxx-driver
+
+cd golos
+git submodule update --init --recursive -f
+
+mkdir build
+cd build
+cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_GOLOS_TESTNET=TRUE \
+    -DBUILD_SHARED_LIBRARIES=FALSE \
+    -DLOW_MEMORY_NODE=FALSE \
+    -DCHAINBASE_CHECK_LOCKING=FALSE \
+    -DENABLE_MONGO_PLUGIN=TRUE \
+    ..
+
+make -j $(nproc)
+
+(здесь можно было бы заняться еще golosd и его конфигом, но это не нужно, нужен только cli_wallet)
+
+cd programs/cli_wallet
+
+Далее, тесты cli_wallet см в файле "cli-wallet Tests!!!.txt"
+
+ВАЖНО: по поводу кливаллета пользуйтесь документацией по кливаллету, то есть "_ golos - libraries - wallet.txt", и документацией по демону.
+Лазайте туда, чтобы понять, какой параметр за что отвечает и как что работает.
+
+9.1. Чтобы следить за монгой (для тестов), проще всего использовать утилиту Studio 3T.
+Для этого следует
+вбить в гугле studio 3t,
+скачать ее (полей на сайте заполнять не нужно),
+распаковать файл (например с помощью tar xzf, или в LXDE с Xarchiver просто нажмите правой кнопкой по архиву и выберете Extract),
+полученному .sh файлу дать право выполнения,
+выполнить его - он установит JRE, запустит инсталлятор, тот все установит, создаст ярлык на рабочем столе и можно пользоваться.
+9.1.1. Запустите Studio 3T, подключитесь к монго, щелкните правой кнопкой по базе данных и нажмите Refresh, чтобы увидеть появившиеся коллекции.
+Чтобы проверить коллекцию на новые документы - просто щелкните по ней дважды, чтобы открыть ее.
+СОВЕТЫ:
+Если не хватает ОЗУ, то Studio 3T имеет смысл закрывать.
+Также можно взять вместо нее более легкую Robo 3T, она даже не требует установки - только распаковки, но в ней меньше возможностей по поиску коллекций (актуально в условиях не-тестнета, или тестов с большими объемами).
+
+9.2. Если у вас нет возможности использовать все эти утилиты (например, в rundeck у вас есть только консоль), то вам понадобится обычная команда mongo.
+Выполните: mongo --host 172.17.0.1
+Затем:
+show database Показывает список баз данных (проверять, появился ли Golos - есть ли вообще контакт с монгой)
+use Golos Чтобы выбрать базу данных для какой-либо работы с ней
+show collections Показывает список коллекций в выбранной базе данных
+db.comment_object.count() Получает количество документов в comment_object (для проверки в не-тестнете и оценки скорости, с которой сыплются документы)
+db.comment_object.find() Выводит все документы comment_object

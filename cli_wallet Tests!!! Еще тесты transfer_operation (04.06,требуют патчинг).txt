@@ -1,0 +1,37 @@
+Rev. v0.18.0, 04.06.2018
+
+WARNING:
+all tests require patch steem_evaluator to set account's balance to non-zero when account is creating. 
+
+=== Full test (with promoted_balance): ===
+
+./cli_wallet --server-rpc-endpoint=ws://127.0.0.1:8091
+set_password qwer
+unlock qwer
+import_key 5JVFFWRLwz6JoP9kguuRFfytToGU6cLgBVTL9t6NB3D3BQLbUBS
+create_account cyberfounder test "{}" "60.000 GOLOS" true
+transfer_to_vesting cyberfounder test "30.000 GOLOS" true
+post_comment test test "" test hello world "{}" true
+
+create_account cyberfounder test2 "{}" "60.000 GOLOS" true
+transfer_to_vesting cyberfounder test2 "30.000 GOLOS" true
+
+transfer test2 test "10.000 GOLOS" "#loremipsum" true
+
+transfer test2 test "10.000 GOLOS" "@test/test" true
+
+=== Short test: ===
+
+./cli_wallet --server-rpc-endpoint=ws://127.0.0.1:8091
+set_password qwer
+unlock qwer
+import_key 5JVFFWRLwz6JoP9kguuRFfytToGU6cLgBVTL9t6NB3D3BQLbUBS
+create_account cyberfounder test "{}" "60.000 GOLOS" true
+transfer_to_vesting cyberfounder test "30.000 GOLOS" true
+
+create_account cyberfounder test2 "{}" "60.000 GOLOS" true
+transfer_to_vesting cyberfounder test2 "30.000 GOLOS" true
+
+transfer test2 test "10.000 GOLOS" "#loremipsum" true
+
+transfer test2 test "10.000 GOLOS" "#loremipsum" true

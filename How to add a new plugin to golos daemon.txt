@@ -1,0 +1,21 @@
+0. Add its folder to /golos/plugins.
+
+1. Add it to /golos/programs/golosd/CMakeLists.txt -> target_link_libraries, like this:
+...
+golos::mongo_db <-- this is your plugin
+golos_protocol
+...
+
+2. #include its root plugin hpp file in the /golos/programs/golosd/main.cpp, like this:
+...
+#include <golos/plugins/mongo_db/mongo_db_plugin.hpp>
+...
+
+3. Add it to golos::plugins::register_plugins() in /golos/programs/golosd/main.cpp, like this:
+...
+appbase::app().register_plugin<golos::plugins::mongo_db::mongo_db_plugin>();
+...
+
+4. Add to "plugin" line of /golos/share/config/config.ini, config_debug.ini.
+
+5. Build. Finally, don't forget to replace the config file with new one (Dockerfile should do it on each build).

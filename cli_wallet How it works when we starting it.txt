@@ -1,0 +1,36 @@
+cli_wallet starts from "programs/cli_wallet/main.cpp"
+
+Here is unsafe_main() method
+
+Here is wallet_cli variable of type fc::rpc::cli which actually handles command line (after websocket client connected and etc.)
+
+main.cpp's unsafe_main() creates the api:
+fc:api<wallet_api> wapi(wapiptr);
+
+Next, main.cpp's daemon_run() registers wapi with cli::register_api()
+
+Next, main.cpp's daemon_run() calls:
+cli::start(); cli::wait();
+
+---
+
+fc::rpc::cli is in "/golos/thirdparty/fc/src/rpc/cli.cpp", inherits fc::rpc::api_connection
+
+Here is loop of handling commands in cli::run() method
+
+On each command it calls receive_call(0, ...) method which is implemented in fc::rpc::api_connection class
+
+receive_call(0, ...) actually calls generic_api::call(method_name, args), which is created on wapi (which is fc:api<wallet_api>, as above) by: new generic_api(wapi, ...)
+ NOTE: generic_api is in api_connection.hpp
+
+
+
+
+
+
+
+
+
+
+
+

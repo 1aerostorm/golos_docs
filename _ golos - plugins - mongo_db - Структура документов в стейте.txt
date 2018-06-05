@@ -1,0 +1,108 @@
+﻿==== Introduction:
+
+В данном файле описано, какие документы создаются при различных операциях в mongo_db_state.cpp (state_writer) и как заполняются их поля.
+Файл поделен на разделы по операциям. Операции, не создающие документов, пропущены.
+По каждой операции - список создаваемых ею документов, в исходном порядке.
+По каждому документу - комментарии к его полям, содержащие сведения о том, откуда они берутся (из db, из операции) и об индексах.
+
+Версия v18, 03.06.2018
+
+==== ОПЕРАЦИЯ vote_operation:
+
+comment_object
+- author - из операции
+- permlink - из операции
+- _id (индекс): author + "/" + permlink
+- остальные - от db_.get_comment(), кроме следующих:
+- title, body, json_metadata - от db_.get_comment_content()
+
+comment_content_object
+Был удален.
+
+comment_vote_object
+- author - из операции
+- permlink - из операции
+- voter - из операции
+- _id (индекс): author + "/" + permlink + "/" + voter
+- comment (индекс): author + "/" + permlink
+- остальные - из db
+
+== ОПЕРАЦИИ comment_operation, comment_options_operation, comment_payout_update_operation:
+
+comment_object
+- author - из операции
+- permlink - из операции
+- _id (индекс): author + "/" + permlink
+- остальные - от db_.get_comment(), кроме следующих:
+- title, body, json_metadata - от db_.get_comment_content()
+
+==== ОПЕРАЦИЯ delete_comment_operation:
+
+comment_object (removed = true)
+- author - из операции
+- permlink - из операции
+- _id (индекс): author + "/" + permlink
+
+comment_vote_object (REMOVAL)
+- comment: author + "/" + permlink
+
+==== ОПЕРАЦИЯ author_reward_operation:
+
+author_reward
+- author - из операции
+- permlink - из операции
+- _id (индекс): author + "/" + permlink
+- comment (НЕ индекс): author + "/" + permlink
+- timestamp - из state_block
+- sbd_payout - из операции
+- steem_payout - из операции
+- vesting_payout - из операции
+
+==== ОПЕРАЦИЯ curation_reward_operation:
+
+curation_reward
+- author - из операции
+- permlink - из операции
+- _id (индекс): author + "/" + permlink + "/" + curator (из операции)
+- comment (индекс): author + "/" + permlink
+- vote (НЕ индекс): author + "/" + permlink + "/" + curator (из операции)
+- timestamp - из state_block
+- reward - из операции
+- curator - из операции
+
+==== ОПЕРАЦИЯ comment_reward_operation:
+
+comment_reward
+- author - из операции
+- permlink - из операции
+- _id (индекс): author + "/" + permlink
+- comment (НЕ индекс): author + "/" + permlink
+- timestamp - из state_block
+- payout - из операции
+
+==== ОПЕРАЦИЯ comment_benefactor_reward_operation:
+
+benefactor_reward
+- author - из операции
+- permlink - из операции
+- benefactor - из операции
+- _id (индекс): author + "/" + permlink + "/" + benefactor
+- comment (индекс): author + "/" + permlink
+- timestamp - из state_block
+- reward - из операции
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

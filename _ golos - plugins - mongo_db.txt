@@ -1,0 +1,24 @@
+== golos/plugins/mongo_db/mongo_db_plugin.cpp:
+
+- mongo_db_plugin_impl::mongo_db_plugin_impl():
+Initializes the "db_" variable with chain database.
+
+- mongo_db_plugin_impl::initialize():
+Bypasses MongoDB URI, writer_raw, and options vector to the writer.
+
+- mongo_db_plugin_impl::on_block():
+Calls writer.on_block().
+
+- mongo_db_plugin_impl::on_operation():
+Calls writer.on_operation().
+
+== golos/plugins/mongo_db/mongo_db_writer.cpp:
+
+Works with the MongoDB - connects, writes, removes.
+
+- mongo_db_writer::initialize()
+Connects to mongodb with mongocxx.
+
+== golos/plugins/mongo_db/mongo_db_state.cpp:
+
+Handles the operations, creates the data structure to writing for each operation.

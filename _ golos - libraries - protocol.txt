@@ -1,0 +1,12 @@
+== /golos/libraries/protocol/include/config.hpp:
+
+Here are the major config definitions, like the cashout time, block interval, miner name and another.
+
+== /golos/libraries/protocol/include/steem_operations.hpp:
+
+Here is a definition of all operations model-classes, used in the daemon, including, the MongoDB plugin's "mongo_db_state.cpp".
+/golos/libraries/protocol/steem_operations.cpp - here are their implementations.
+
+== /golos/libraries/protocol/include/steem_virtual_operations.hpp:
+
+Same as "steem_operations.hpp", but, for virtual operations. No implementation - all is in the headerfile.
