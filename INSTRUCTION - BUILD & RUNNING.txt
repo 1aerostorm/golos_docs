@@ -1,4 +1,7 @@
 ﻿
+0.
+sudo apt-get update
+
 1. Монгу ставим к себе на хост:
 sudo apt-get install mongodb
 
@@ -18,11 +21,13 @@ sudo apt-get update
 sudo apt-get install -y docker-engine
 
 3.
-git clone -b 0.18.0-mongo-db-plugin https://github.com/GolosChain/golos
-cd golos
+Если все текущие ваши пуллы вмержены, то просто скачиваем актуальную версию - 0.18.0:
+git clone -b golos-v0.18.0 https://github.com/GolosChain/golos
+Но, если у вас есть ветка новее, то вместо golos-v0.18.0 впишите ее.
 
 4. 
-sudo docker build -t goloschain/golos -f share/golosd/docker/Dockerfile-testnet .
+cd golos
+sudo docker build -t goloschain/golos -f share/golosd/docker/Dockerfile-testnet-mongo .
 
 5. 
 Команда запуска:
@@ -35,6 +40,7 @@ sudo docker run -d \
 
 6. Чтобы смотреть лог:
 sudo docker logs --tail 10 -f golos-default
+Лог сам обновляется каждые 10 секунд. Чтобы выйти - Ctrl+C.
 
 7. Остановка:
 sudo docker stop golos-default
@@ -103,7 +109,7 @@ cmake \
 
 make -j $(nproc)
 
-(здесь можно было бы заняться еще golosd и его конфигом, но это не нужно, нужен только cli_wallet)
+(здесь можно было бы заняться еще golosd и его конфигом, так же как это делается в докерфайле, но если демон мы запускаем в докере, то здесь это не нужно, нужен только cli_wallet)
 
 cd programs/cli_wallet
 

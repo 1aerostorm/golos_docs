@@ -1,4 +1,4 @@
-== /golos/libraries/chain/database.cpp:
+﻿== /golos/libraries/chain/database.cpp:
 
 There are methods which work with the main blockchain database.
 
@@ -8,3 +8,9 @@ database::cashout_comment_helper() pushes the reward operations.
 == /golos/libraries/chain/***:
 
 Also, there are all db objects. For instance, there is the comment object in /golos/libraries/chain/include/golos/chain/comment_object.hpp
+
+== /golos/libraries/chain/steem_evaluator.cpp:
+
+There is a class which modifies db on each operation. Should be used to analyse which db objects are creating/modifying on each operation, and do same in handlers inside your plugin.
+
+WARNING: Способы модификации объектов весьма многолики. Например, steem_evaluator может вызывать какой-то метод из db, а тот уже сделает create или modify. Будьте внимательны, тщательно анализируйте каждую строчку, лезьте в database.cpp смотреть каждый непонятный вам метод, чтобы проверить, не модифицирует\добавляет ли он чего.
