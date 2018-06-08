@@ -38,13 +38,15 @@ sudo docker run -d \
     --name golos-default \
     goloschain/golos
 
+5.1. Если это первый запуск, то далее нужно сделать остановку (см. пункт 7), затем на хосте зайти в /var/lib/ удалить blockchain и заменить содержимое config.ini данными из golos/share/golosd/config/config_debug_mongo.ini После чего снова сделать запуск.
+
 6. Чтобы смотреть лог:
 sudo docker logs --tail 10 -f golos-default
 Лог сам обновляется каждые 10 секунд. Чтобы выйти - Ctrl+C.
 
 7. Остановка:
 sudo docker stop golos-default
-docker rm golos-default
+sudo docker rm golos-default
 
 8. Для полной очистки перед повторным билдом нужно остановить, а также:
 docker image rm goloschain/golos
@@ -82,6 +84,7 @@ cd mongo-c-driver-1.9.5
 make
 sudo make install
 cd ..
+sudo chmod -R 777 mongo-c-driver-1.9.5
 rm -rf mongo-c-driver-1.9.5
 echo "Installing mongo-cxx-driver"
 git clone https://github.com/mongodb/mongo-cxx-driver.git --branch releases/v3.2 --depth 1
@@ -91,6 +94,7 @@ sudo make EP_mnmlstc_core
 make
 sudo make install
 cd ../..
+sudo chmod -R 777 mongo-cxx-driver
 rm -rf mongo-cxx-driver
 
 cd golos
@@ -134,7 +138,7 @@ cd programs/cli_wallet
 9.2. Если у вас нет возможности использовать все эти утилиты (например, в rundeck у вас есть только консоль), то вам понадобится обычная команда mongo.
 Выполните: mongo --host 172.17.0.1
 Затем:
-show database Показывает список баз данных (проверять, появился ли Golos - есть ли вообще контакт с монгой)
+show databases Показывает список баз данных (проверять, появился ли Golos - есть ли вообще контакт с монгой)
 use Golos Чтобы выбрать базу данных для какой-либо работы с ней
 show collections Показывает список коллекций в выбранной базе данных
 db.comment_object.count() Получает количество документов в comment_object (для проверки в не-тестнете и оценки скорости, с которой сыплются документы)
