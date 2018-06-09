@@ -34,7 +34,7 @@ YdX+8SZXYJx62uWXCSgOfHnOGO3bmExWclKOIDl3/zNTIDk+agH3SAsjj2tCt6tJ
 .ssh/id_rsa.pub (отключите в блокноте перенос и проверьте, все должно быть в 1 строку):
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDswGeAeCpX9e1O82Ogw/hl9/IkA8XIZqyzITnZznNCn/DWbddeJBXVJZOZJQujY00XxY6WifAYwMKNOqw2lvrcOzJXtaXnbJyqP6cRGUtbfHisZPDepBPoMPtI44uoqCN1B5ASDFyK4g43AL6JLfevp+RXL9fzelMW32I2ICd8td8QRYUJJ6PChQnrsn5DBgkZPUC8X1YwtoYBvnvDZLpbbWG5l1084JPtVXOIQLQn43k8tlEi70VOVTJUtsD/wLpVrIFjor2HZr7ydcwON07rYNCczzzvVSlzWfJvKIkE8WQ1PYleg3cB3jg29/t03uBReb+FuVsQhuqFOVKVkoyN root@ubuntu
 .ssh/config:
-IdentityFile: /root/.ssh/id_rsa
+IdentityFile /root/.ssh/id_rsa
 (ваш путь к файлу id_rsa)
 
 1. При установленных ключах (.ssh/id_rsa, .ssh/id_rsa.pub и .ssh/config) выполнить:

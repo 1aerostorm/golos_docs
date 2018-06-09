@@ -2,35 +2,34 @@
 0.
 sudo apt-get update
 
-1. Монгу ставим к себе на хост:
-sudo apt-get install mongodb
-
-2. 
-sudo systemctl status mongodb
-Если не active, то:
-sudo systemctl start mongodb
-
-2.1. В /etc/mongo.conf меняем bind_ip на 172.17.0.1 или просто на 0.0.0.0 (это нужно для Docker) и перезапускаем
-sudo systemctl restart mongodb
-
-2.2. Теперь устанавливаем Docker:
+1. Устанавливаем Docker:
 sudo apt-get update
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'
 sudo apt-get update
 sudo apt-get install -y docker-engine
 
+2.
+sudo apt-get install mongodb
+
+2.1. 
+sudo systemctl status mongodb
+Если не active, то:
+sudo systemctl start mongodb
+
+2.2. В /etc/mongo.conf меняем bind_ip на 172.17.0.1 или просто на 0.0.0.0 (это нужно для Docker) и перезапускаем
+sudo systemctl restart mongodb
+
 3.
 Если все текущие ваши пуллы вмержены, то просто скачиваем актуальную версию - 0.18.0:
 git clone -b golos-v0.18.0 https://github.com/GolosChain/golos
 Но, если у вас есть ветка новее, то вместо golos-v0.18.0 впишите ее.
 
-4. 
+4. Команда билда:
 cd golos
 sudo docker build -t goloschain/golos -f share/golosd/docker/Dockerfile-testnet-mongo .
 
-5. 
-Команда запуска:
+5. Команда запуска:
 sudo docker run -d \
     -p 4243:4243 -p 8090:8090 -p 8091:8091 \
     -v /etc/golosd:/etc/golosd \
@@ -132,7 +131,7 @@ cd programs/cli_wallet
 9.1.1. Запустите Studio 3T, подключитесь к монго, щелкните правой кнопкой по базе данных и нажмите Refresh, чтобы увидеть появившиеся коллекции.
 Чтобы проверить коллекцию на новые документы - просто щелкните по ней дважды, чтобы открыть ее.
 СОВЕТЫ:
-Если не хватает ОЗУ, то Studio 3T имеет смысл закрывать.
+Если во время билда не хватает ОЗУ, то Studio 3T имеет смысл закрывать.
 Также можно взять вместо нее более легкую Robo 3T, она даже не требует установки - только распаковки, но в ней меньше возможностей по поиску коллекций (актуально в условиях не-тестнета, или тестов с большими объемами).
 
 9.2. Если у вас нет возможности использовать все эти утилиты (например, в rundeck у вас есть только консоль), то вам понадобится обычная команда mongo.
