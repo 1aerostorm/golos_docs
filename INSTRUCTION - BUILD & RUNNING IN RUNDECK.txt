@@ -1,48 +1,13 @@
-﻿0. В home папке пользователя создайте следующие файлы, контролируя, чтобы не было лишних переносов строк:
+﻿
+0. В первый раз необходимо установить ключи (см. файл INSTALLING KEYS FOR RUNDECK)
 
-.ssh/id_rsa:
------BEGIN RSA PRIVATE KEY-----
-Proc-Type: 4,ENCRYPTED 
-DEK-Info: AES-128-CBC,220D86AAB79CB831A4568B5E4CBF22C9 
-
-un8Z5DCwMISKX4GQzpwpcRlfJ6GIPU7RisDFMedJEBNtRhfcjsAL2XRie2Dejiqj 
-JOVhCrfdeNnrOZ3WtDgjEaA1LhdCivVMyd+mm4ewof5G94gKJt+aodcwfPujxE5R 
-dR7IltZySLVOpPQ0U7RdPw2BkrOfAgpjeCWGJcJp14ppO0oaJoe/1Xs9lL5QuCIk 
-FaKTVyWgzBjrHvGQ4HR8H+QNsVMn62wsXrjO8HZNZtGxxdC4Fo7AhgnoSzFB7wTs 
-o/ek0OmAEQPtykx1SzM6N/XlJPGpwgRfEgHkwlxDtOaho16cO7caCm4fHmsvL449 
-qtD0BXcLDifISfl368b7/y9LxCVM0TBxUspj62Y1bpLg6dT7tkd5hBh3nt/bA3tx 
-8QyAEuQs2BD/hKJ3yZ+8aE/J/13tue7HHGD9/VNm63URzKu5asABHaRhSifTXV2E 
-4tRVURWGL4i1LJyWFVHY2MbK5j4aznMZNhz/+CZrMDMux7arm6GpH1giDLdQoHmy 
-t4eS6VkwTAHZYEjGJZ0lFgtjeKllVy+nhEoI8TrojE61qVHMco+IFWEkBYcKITnW 
-9ELg5go6ZLG5fWlfQ4FRxGdnzV+0z4abp4uXWgMsK1Yenkmf5QgxW5CSJ/xMyjMP 
-uH3KSki2zxkdzt5/r+G+kqpta3TFtndX872VR5/Xo/+CbLIR/mqvMDoAOu8nlCXI 
-pyyBkJSe+naDIahCPkC0u6V+Zcu+dWR9pCAZV0yFO6h47/pyMX1xiCxDnFJdA18T 
-nsn5RKteVGbzVpdepLZrAoOQLGufsI6sh75W0EL530nrk1LanefctTCjjJdJ4VM9 
-zaT7kdM6Y+MW3q7E94wshE4z7S5Y9Nf5FvGkoj43lX3FQCJHRn9n7TMdoeZBz8C1 
-bWi/mjPhzqcK8OedosZB8wY+olSPncYQYR+o3NGVl0rR+d2Fp9HEBZcguZemYAo1 
-DLSW29ftb37wTLLKe5EKyXLXyWq0H5O22F96XgXHkD3pLa61ATYgRgX8UetIvJ6T 
-ZikMbYdPKCvDkcRKAIEMX2ay9tJs00qOq7nuLZ1b1/AjVG8CK6aTWJMj4XCLI5gG 
-+XTaThyobjacsytHKVf9VgYmJcXM5vLe/9aN3njyb1dcDNtUBlP3fJDym6/KoHnb 
-59TQg6G7pKfqPtiC0eAio6Kg3PcEq1RRnmjSudsXRn3EpnaJbeygzlFTCt4ybRHT 
-p7JCparBQ01uDZAUZJSCatx5zuiqErL8z5zOVur77cpGNwwE9I7FmDgr6Ryu8/UO 
-0FJNB7VU2sHkGrD6xJWFu4eppuWf9xjSi6Mk/ji4n9kFhYkj7+L6mL6a0EJWWItp 
-ImhsuE0gQL019RPg8CXRh4+zOWvvQLAUveHB7T0VFAT4V9B0dJ5aE+9VxInHNnlI 
-sB4xhRj1Cf21ASDtz42t1iVvv+ERO6bb69iObzV4dCOTJQ0bj4PQXdClsMK50m2B 
-9jktmsuyS6yE+8ZH3TnVELzr2DFMH3+BVJWNAdaKMquJQrxYDROd44uoBe8DnD3v 
-YdX+8SZXYJx62uWXCSgOfHnOGO3bmExWclKOIDl3/zNTIDk+agH3SAsjj2tCt6tJ 
------END RSA PRIVATE KEY-----
-.ssh/id_rsa.pub (отключите в блокноте перенос и проверьте, все должно быть в 1 строку):
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDswGeAeCpX9e1O82Ogw/hl9/IkA8XIZqyzITnZznNCn/DWbddeJBXVJZOZJQujY00XxY6WifAYwMKNOqw2lvrcOzJXtaXnbJyqP6cRGUtbfHisZPDepBPoMPtI44uoqCN1B5ASDFyK4g43AL6JLfevp+RXL9fzelMW32I2ICd8td8QRYUJJ6PChQnrsn5DBgkZPUC8X1YwtoYBvnvDZLpbbWG5l1084JPtVXOIQLQn43k8tlEi70VOVTJUtsD/wLpVrIFjor2HZr7ydcwON07rYNCczzzvVSlzWfJvKIkE8WQ1PYleg3cB3jg29/t03uBReb+FuVsQhuqFOVKVkoyN root@ubuntu
-.ssh/config:
-IdentityFile /root/.ssh/id_rsa
-(ваш путь к файлу id_rsa)
-
-1. При установленных ключах (.ssh/id_rsa, .ssh/id_rsa.pub и .ssh/config) выполнить:
+1. После установки ключей (.ssh/id_rsa, .ssh/id_rsa.pub и .ssh/config) выполнить:
 ssh yuliya@159.89.20.154
 
 Используются следующие пароли:
 key passphrase: 12345
 пароль юзера: qzc123
+логин и пароль (только в rundeck.golos.io) yuliya qmwod8932e2hbgc
 
 Если войти не выходит, то смотреть лог можно через: ssh -vvv yuliya@159.89.20.154
 
