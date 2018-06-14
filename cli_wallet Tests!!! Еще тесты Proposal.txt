@@ -31,8 +31,8 @@ proposal_object - 1 pcs
   required_active_approvals = bob, alice
 required_approval_object - 2 pcs, all with following:
   proposal = _id from proposal_object
-  1st have account = bob
-  2nd hava accound = alice
+  1st has: account = bob
+  2nd has: account = alice
 
 2. Proposal approving (deleting?) test:
 
