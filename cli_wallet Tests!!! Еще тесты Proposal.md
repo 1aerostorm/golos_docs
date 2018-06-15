@@ -1,0 +1,72 @@
+0. Prepare to test:
+
+./cli_wallet --server-rpc-endpoint=ws://127.0.0.1:8091
+set_password qwer
+unlock qwer
+import_key 5JVFFWRLwz6JoP9kguuRFfytToGU6cLgBVTL9t6NB3D3BQLbUBS
+update_witness cyberfounder "http://url" GLS58g5rWYS3XFTuGDSxLVwiBiPLoAyCZgn6aB9Ueh8Hj5qwQA3r6 {"account_creation_fee": "10.000 GOLOS"} true
+publish_feed cyberfounder {"base": "1.000 GBG", "quote": "1.000 GOLOS"} true
+
+create_account cyberfounder alice "{}" "300.000 GOLOS" true
+post_comment alice test "" test hello world "{}" true
+transfer cyberfounder alice "150.000 GOLOS" "{}" true
+
+create_account cyberfounder bob "{}" "300.000 GOLOS" true
+post_comment bob test2 "" test2 hello world "{}" true
+transfer cyberfounder bob "150.000 GOLOS" "{}" true
+
+1. Proposal creation test:
+
+WARNING: Replace first date-time with your actual time, for example it could be an MSK date-time + 30 minutes
+
+begin_builder_transaction
+add_operation_to_builder_transaction 0 ["transfer", {"from":"alice", "to":"bob", "amount":"1.000 GOLOS", "memo":"to bob"}]
+add_operation_to_builder_transaction 0 ["transfer", {"from":"bob", "to":"alice", "amount":"1.000 GOLOS", "memo":"to alice"}]
+propose_builder_transaction 0 alice test633 "" "2018-06-14T08:50:00" "1970-01-01T00:00:00" false
+sign_builder_transaction 0 true
+
+Result in Mongo:
+proposal_object - 1 pcs
+  author = alice
+  required_active_approvals = bob, alice
+required_approval_object - 2 pcs, all with following:
+  proposal = _id from proposal_object
+  1st has: account = bob
+  2nd has: account = alice
+
+2. Proposal approving (deleting?) test:
+
+approve_proposal alice test633 {"active_approvals_to_add":["alice", "bob"]} true
+
+Result in Mongo:
+proposal_object now has:
+  removed = true
+required_approval_object - 2 pcs, now have:
+  removed = true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
