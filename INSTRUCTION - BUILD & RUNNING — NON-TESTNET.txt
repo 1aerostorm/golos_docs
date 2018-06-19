@@ -1,0 +1,78 @@
+﻿
+WARNING: THIS DOCUMENT IS OBSOLETE BECAUSE IT DOES NOT USE DOCKER.
+
+ВНИМАНИЕ: ЭТОТ ДОКУМЕНТ УСТАРЕЛ, ПОТОМУ ЧТО НЕ ИСПОЛЬЗУЕТ DOCKER.
+
+
+1. Выполните весь пункт "9. Насчет cli-wallet" из файла "INSTRUCTION - BUILD & RUNNING.txt" до строчки "make -j $(nproc)" включительно
+
+2. Если находитесь в папке build, которую создали при п.1, то сделайте cd ..
+
+3. Постройте не-тестнет в папке build2:
+
+mkdir build2
+cd build2
+cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_GOLOS_TESTNET=FALSE \
+    -DBUILD_SHARED_LIBRARIES=FALSE \
+    -DLOW_MEMORY_NODE=FALSE \
+    -DCHAINBASE_CHECK_LOCKING=FALSE \
+    -DENABLE_MONGO_PLUGIN=TRUE \
+    ..
+
+make -j $(nproc)
+
+4. Запустите golosd, чтобы создать папку witness_node_data_dir (в папке build2/programs/golosd)
+cd programs/golosd
+./golosd
+Как только она появится - нажмите Ctrl+C. Если будет долго завершаться - убейте через диспетчер (здесь и далее).
+
+5. Зайдите в эту папку. Удалите в ней папку blockchain.
+
+6. Скопируйте snapshot5392323.json из share/golosd в build2/programs/golosd/witness_node_data_dir которую создали в п.4.
+
+7. Так же сделайте и с seednodes
+
+8. В папке build2/programs/golosd создайте файл golosd.sh
+В нем должно быть такое содержимое:
+#!/bin/bash
+ 
+SEED_NODES="$(cat seednodes | awk -F' ' '{print $1}')"
+ 
+ARGS=""
+ 
+for NODE in $SEED_NODES ; do
+    ARGS+=" --seed-node=$NODE"
+done
+ 
+./golosd $ARGS
+
+9. Файлу golosd.sh надо дать права на выполнение (будучи в папке build2/programs/golosd (если вы не в ней, попадите туда через cd))
+sudo chmod -R 777 golosd.sh
+
+10. Из папки share/golosd/config скопировать файл config_mongo.ini в папку build2/programs/golosd/witness_node_data_dir, при этом переименовать его в config.ini
+
+11. ЗАПУСК:
+Чтобы запустить, нужно, будучи в папке build2/programs/golosd (если вы не в ней, попадите туда через cd), выполнить это:
+./golosd.sh
+
+12. Через некоторое время в монго появится БД.
+
+13. Внимание: следите за местом на диске.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
