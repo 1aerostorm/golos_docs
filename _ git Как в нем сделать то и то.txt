@@ -82,8 +82,8 @@ git rebase -i HEAD~3
 Если все прошло успешно, то проверяем:
 git log
 
-И затем пушим, как обычно:
-git push origin nuzhnaya_vetka
+И затем пушим:
+git push -f origin HEAD
 cd ..
 rm -rf golos
 
