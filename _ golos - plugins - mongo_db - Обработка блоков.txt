@@ -5,11 +5,13 @@
 
 Затем, в процессе всей жизни плагина, mongo_db_plugin_impl::on_block() вызывает mongo_db_writer::on_block() для каждого прилетающего signed_blockа, так что дальнейшая обработка signed_blockа продолжается в mongo_db_writer.cpp.
 
-== golos/plugins/mongo_db/mongo_db_writer.cpp:
+== golos/plugins/mongo_db/mongo_db_writer.cpp: ПУТЬ БЛОКОВ. НАЧАЛО.
 
-mongo_db_writer::on_block() проходит в цикле while по всем блокам в signed_block (signed_block - это серия блоков).
+mongo_db_writer::on_block() получает именно каждый блок, а не серию блоков. Но он его добавляет в кеш - мапу blocks - и в очередной раз, когда сработает if с irreversible, то он обработает всю эту мапу блоков в цикле while. (И очистит ее, удалив каждый обрабатываемый блок с помощью erase).
 
-Для каждого блока создается свой state_writer, в который передается ссылка на signed_block (да, именно серию блоков; просто из-за поля timestamp) и, самое главное, на all_docs - единый boost::multi_index_container для всех блоков этой серии.
+Как происходит обработка каждого блока из кеша в цикле.
+
+Там для каждого блока создается свой state_writer, в который передается ссылка на signed_block (ради поля timestamp) и, самое главное, на all_docs - единый boost::multi_index_container для всех блоков этой серии.
 
 У каждого из блоков цикл проходит по всем транзакциям и по всем операциям, для каждой из операции вызывается конструкция вида op.visit(st_writer); которая приводит к вызову оператора соответствующей операции из state_writer (!) , расположенного в mongo_db_state.cpp (!)
 
