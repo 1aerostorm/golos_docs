@@ -1,0 +1,11 @@
+<script src="node_modules/golos-js/dist/golos.min.js"></script>
+Hello world, see console
+<script>
+golos.config.set('websocket', 'ws://127.0.0.1:8091');
+var logger = function(err, result) { console.log(err, result); };
+//Check for correct webserver. Should return cyberfounder
+//golos.api.getActiveWitnesses(logger);
+golos.api.getContent('test', 'test', 10000, function(err, result) {
+document.body.innerHTML = '<pre>' + JSON.stringify(result, null, 2) + '</pre>';
+} );
+</script>
