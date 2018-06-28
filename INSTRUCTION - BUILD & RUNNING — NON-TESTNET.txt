@@ -28,13 +28,13 @@ cd programs/golosd
 ./golosd
 Должно запуститься и сразу вылететь, успев создать папку. (Если почему-то не вылетает - нажмите Ctrl+C. Если будет долго завершаться - убейте через диспетчер (здесь и далее)).
 
-5. Зайдите в эту папку. Удалите в ней папку blockchain.
+5. Зайдите в эту папку. Удалите в ней папку blockchain. После чего выйдите из этой папки обратно в golosd.
 
-6. Скопируйте snapshot5392323.json из share/golosd в build2/programs/golosd/witness_node_data_dir которую создали в п.4.
+6. Скопируйте snapshot5392323.json из share/golosd в build2/programs/golosd
 
-7. Так же сделайте и с seednodes, после чего выйдите на уровень выше (build2/programs/golosd)
+7. Так же сделайте и с seednodes
 
-8. В папке build2/programs/golosd создайте файл golosd.sh
+8. В этой же папке - build2/programs/golosd - создайте файл golosd.sh
 В нем должно быть такое содержимое:
 #!/bin/bash
  
@@ -50,6 +50,7 @@ done
 
 9. Файлу golosd.sh надо дать права на выполнение (будучи в папке build2/programs/golosd (если вы не в ней, попадите туда через cd))
 sudo chmod -R 777 golosd.sh
+ВНИМАНИЕ: для запуска будет использовать golosd.sh, а не golosd напрямую.
 
 10. Из папки share/golosd/config скопировать файл config_mongo.ini в папку build2/programs/golosd/witness_node_data_dir, при этом переименовать его в config.ini
 
