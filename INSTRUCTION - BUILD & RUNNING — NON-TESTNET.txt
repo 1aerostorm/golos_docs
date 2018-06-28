@@ -32,7 +32,7 @@ cd programs/golosd
 
 6. Скопируйте snapshot5392323.json из share/golosd в build2/programs/golosd/witness_node_data_dir которую создали в п.4.
 
-7. Так же сделайте и с seednodes
+7. Так же сделайте и с seednodes, после чего выйдите на уровень выше (build2/programs/golosd)
 
 8. В папке build2/programs/golosd создайте файл golosd.sh
 В нем должно быть такое содержимое:
@@ -52,6 +52,8 @@ done
 sudo chmod -R 777 golosd.sh
 
 10. Из папки share/golosd/config скопировать файл config_mongo.ini в папку build2/programs/golosd/witness_node_data_dir, при этом переименовать его в config.ini
+
+10.1. Коль скоро докер в данном случае не используется, то закомментируйте строку с mongodb-uri в config.ini
 
 11. ЗАПУСК:
 Чтобы запустить, нужно, будучи в папке build2/programs/golosd (если вы не в ней, попадите туда через cd), выполнить это:
