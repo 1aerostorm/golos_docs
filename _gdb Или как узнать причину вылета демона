@@ -1,0 +1,45 @@
+Бывает, что из-за бага демон вылетает с таким сообщением, как:
+Segmentation fault (core dumped)
+или
+Aborted (core dumped)
+При этом больше никакой информации может не быть.
+
+Обычно достаточно просто проанализировать свой код, локализовав проблемную строчку и исправив ее.
+Но бывает, что баг возникает не в вашем коде и тогда невозможно понять, что же вы сделали не так.
+
+В таком случае следует использовать gdb.
+
+Находясь в папке /build/programs/golosd выполните
+gdb golosd
+
+В нем выполните
+run
+
+Затем выполните
+bt
+
+Пример результата:
+/lib/x86_64-linux-gnu/libc.so.6(+0x777e5)[0x7f629e7107e5]
+/lib/x86_64-linux-gnu/libc.so.6(+0x8037a)[0x7f629e71937a]
+/lib/x86_64-linux-gnu/libc.so.6(cfree+0x4c)[0x7f629e71d53c]
+/usr/local/lib/libbson-1.0.so.0(bson_destroy+0x34)[0x7f629e4728f4]
+/usr/local/lib/libmongoc-1.0.so.0(_mongoc_write_result_destroy+0x15)[0x7f629e23c895]
+/usr/local/lib/libmongoc-1.0.so.0(mongoc_bulk_operation_destroy+0x94)[0x7f629e204de4]
+/usr/local/lib/libmongocxx.so._noabi(_ZN8mongocxx7v_noabi10bulk_writeD1Ev+0x12)[0x7f629f323692]
+./golosd(_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10unique_ptrIN8mongocxx7v_noabi10bulk_writeESt14default_deleteISB_EEESt10_Select1stISF_ESt4lessIS5_ESaISF_EE8_M_eraseEPSt13_Rb_tree_nodeISF_E+0x39)[0xeed229]
+./golosd(_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10unique_ptrIN8mongocxx7v_noabi10bulk_writeESt14default_deleteISB_EEESt10_Select1stISF_ESt4lessIS5_ESaISF_EE8_M_eraseEPSt13_Rb_tree_nodeISF_E+0x24)[0xeed214]
+./golosd(_ZN5golos7plugins8mongo_db15mongo_db_writer10write_dataEv+0x315)[0xee6425]
+./golosd(_ZN5golos7plugins8mongo_db15mongo_db_writer8on_blockERKNS_8protocol12signed_blockE+0x20aa)[0xeebe2a]
+./golosd(_ZN5boost8signals26detail11signal_implIFvRKN5golos8protocol12signed_blockEENS0_19optional_last_valueIvEEiSt4lessIiENS_8functionIS8_EENSD_IFvRKNS0_10connectionES7_EEENS0_5mutexEEclES7_+0x150)[0x137dcb0]
+./golosd(_ZN5golos5chain8database20notify_applied_blockERKNS_8protocol12signed_blockE+0x30)[0x12ac000]
+./golosd(_ZN5golos5chain8database12_apply_blockERKNS_8protocol12signed_blockEj+0x235)[0x130b595]
+./golosd(_ZN5golos5chain8database11apply_blockERKNS_8protocol12signed_blockEj+0x55)[0x130d9d5]
+./golosd(_ZN5golos5chain8database11_push_blockERKNS_8protocol12signed_blockEj+0xe1)[0x130e7c1]
+./golosd[0x1315f3e]
+./golosd(_ZN5golos5chain8database10push_blockERKNS_8protocol12signed_blockEj+0x40)[0x1316580]
+./golosd[0xc76463]
+./golosd(_ZN5boost4asio6detail15task_io_service3runERNS_6system10error_codeE+0x3df)[0xbff47f]
+./golosd(_ZN7appbase11application4execEv+0x358)[0xbf7428]
+./golosd(main+0x118)[0xbd9568]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf0)[0x7f629e6b9830]
+./golosd(_start+0x29)[0xbe2ec9]
