@@ -9,6 +9,7 @@ cmake \
     ..
 make -j$(nproc) chain_test
 ./tests/chain_test --log_level=message --report_level=detailed
+echo $?
     
 mkdir buildt2 && \
 cd buildt2 && \
@@ -21,3 +22,5 @@ cmake \
     ..
 make -j$(nproc) plugin_test && \
 ./tests/plugin_test --log_level=message --report_level=detailed
+echo $?
+
