@@ -1,0 +1,23 @@
+mkdir buildt && \
+    cd buildt && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DBUILD_GOLOS_TESTNET=TRUE \
+        -DLOW_MEMORY_NODE=FALSE \
+        -DMAX_19_VOTED_WITNESSES=TRUE \
+        -DENABLE_MONGO_PLUGIN=FALSE \
+        .. && \
+    make -j$(nproc) chain_test plugin_test && \
+    ./tests/chain_test --log_level=message --report_level=detailed && \
+    
+    mkdir buildt2 && \
+    cd buildt2 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DBUILD_GOLOS_TESTNET=TRUE \
+        -DLOW_MEMORY_NODE=FALSE \
+        -DMAX_19_VOTED_WITNESSES=TRUE \
+        -DENABLE_MONGO_PLUGIN=FALSE \
+        .. && \
+    make -j$(nproc) plugin_test && \
+    ./tests/plugin_test --log_level=message --report_level=detailed
