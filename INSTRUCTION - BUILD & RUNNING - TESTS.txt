@@ -7,7 +7,7 @@ mkdir buildt && \
         -DMAX_19_VOTED_WITNESSES=TRUE \
         -DENABLE_MONGO_PLUGIN=FALSE \
         .. && \
-    make -j$(nproc) chain_test plugin_test && \
+    make -j$(nproc) chain_test && \
     ./tests/chain_test --log_level=message --report_level=detailed && \
     
     mkdir buildt2 && \
