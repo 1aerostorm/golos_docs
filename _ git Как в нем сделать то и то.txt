@@ -38,14 +38,14 @@ rm -rf golos
 
 ========================================
 
-Переименовать ветку new_banch в new_branch:
+Переименовать ветку aaa_branch в bbb_branch:
 
 git clone https://github.com/GolosChain/golos
 cd golos
-git checkout new_banch
-git branch -m new_banch new_branch
-git push origin :new_banch
-git push --set-upstream origin new_branch 
+git checkout aaa_branch
+git branch -m aaa_branch bbb_branch
+git push origin :aaa_branch
+git push --set-upstream origin bbb_branch 
 cd ..
 rm -rf golos 
 
