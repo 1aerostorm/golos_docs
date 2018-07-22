@@ -20,9 +20,9 @@ sudo systemctl start mongodb
 sudo systemctl restart mongodb
 
 3.
-Если все текущие ваши пуллы вмержены, то просто скачиваем актуальную версию - 0.18.1:
-git clone -b golos-v0.18.1 https://github.com/GolosChain/golos
-Но, если у вас есть ветка новее, то вместо golos-v0.18.1 впишите ее.
+Если все текущие ваши пуллы вмержены, то просто скачиваем актуальную версию - 0.18.4:
+git clone -b golos-v0.18.4 https://github.com/GolosChain/golos
+Но, если у вас есть ветка новее, то вместо golos-v0.18.4 впишите ее.
 
 4. Команда билда:
 cd golos
