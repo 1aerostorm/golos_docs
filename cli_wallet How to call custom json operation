@@ -1,0 +1,5 @@
+Пример для операции reblog из follow плагина (алисой репостнуть коммент bob/test):
+
+begin_builder_transaction
+add_operation_to_builder_transaction 0 ["custom_json", {"required_posting_auths":["alice"],"id": "follow", "json":"[\"reblog\", {\"account\":\"alice\",\"author\":\"bob\",\"permlink\":\"test\"}]"}]
+sign_builder_transaction 0 true
