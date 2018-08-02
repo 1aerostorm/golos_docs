@@ -107,10 +107,11 @@ rm -rf golos
 ========================================
 
 Как исправлять конфликты (ребейз головы):
-1.
-git clone https://github.com/GolosChain/golos
+1. 
+Скачайте весь репозиторий:
+git clone https://github.com/maslenitsa93/quickfox
 2.
-cd golos
+cd quickfox
 3. 
 git checkout рабочая-ветка
 Например: git checkout master
