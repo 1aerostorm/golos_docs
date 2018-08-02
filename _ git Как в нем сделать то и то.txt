@@ -120,7 +120,7 @@ git pull --prune
 git checkout ваша-ветка
 Например: git checkout 828-add-comment-last-update-object-to-social-network
 6.
-git rebase опять-рабочая-ветка
+git rebase golos-v0.18.4 
 7.
 Эта команда выдаст список конфликтов в файлах.
 Заходим в файлы по порядку, исправляем конфликты, делаем git add путь-к-файлу
