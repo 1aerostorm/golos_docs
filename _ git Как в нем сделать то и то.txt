@@ -113,14 +113,14 @@ git clone https://github.com/GolosChain/golos
 cd golos
 3. 
 git checkout рабочая-ветка
-Например: git checkout golos-v0.18.4 
+Например: git checkout master
 4.
 git pull --prune
 5.
 git checkout ваша-ветка
-Например: git checkout 828-add-comment-last-update-object-to-social-network
+Например: git checkout 1-vetka
 6.
-git rebase golos-v0.18.4 
+git rebase master
 7.
 Эта команда выдаст список конфликтов в файлах.
 Заходим в файлы по порядку, исправляем конфликты, делаем git add путь-к-файлу
