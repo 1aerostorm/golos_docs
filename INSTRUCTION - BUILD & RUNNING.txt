@@ -100,14 +100,8 @@ git submodule update --init --recursive -f
 
 mkdir build
 cd build
-cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_GOLOS_TESTNET=TRUE \
-    -DBUILD_SHARED_LIBRARIES=FALSE \
-    -DLOW_MEMORY_NODE=FALSE \
-    -DCHAINBASE_CHECK_LOCKING=FALSE \
-    -DENABLE_MONGO_PLUGIN=TRUE \
-    ..
+Это копировать целиком от cmake по .. включительно
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_GOLOS_TESTNET=TRUE -DBUILD_SHARED_LIBRARIES=FALSE -DLOW_MEMORY_NODE=FALSE -DCHAINBASE_CHECK_LOCKING=FALSE -DENABLE_MONGO_PLUGIN=TRUE ..
 
 make -j $(nproc)
 
