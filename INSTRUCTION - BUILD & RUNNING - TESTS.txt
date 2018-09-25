@@ -22,7 +22,7 @@ cmake \
     -DMAX_19_VOTED_WITNESSES=TRUE \
     -DENABLE_MONGO_PLUGIN=FALSE \
     ..
-make -j$(nproc) plugin_test && \
+make -j$(nproc) plugin_test
 ./tests/plugin_test --log_level=message --report_level=detailed
 echo $?
 
