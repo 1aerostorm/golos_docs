@@ -2,14 +2,9 @@
 0. В первый раз необходимо установить ключи (см. файл INSTALLING KEYS FOR RUNDECK)
 
 1. После установки ключей (.ssh/id_rsa, .ssh/id_rsa.pub и .ssh/config) выполнить:
-ssh yuliya@159.89.20.154
+ssh yuliya@ip
 
-Используются следующие пароли:
-key passphrase: 12345
-пароль юзера: qzc123
-логин и пароль (только в rundeck.golos.io) yuliya qmwod8932e2hbgc
-
-Если войти не выходит, то смотреть лог можно через: ssh -vvv yuliya@159.89.20.154
+Если войти не выходит, то смотреть лог можно через: ssh -vvv yuliya@ip
 
 2. Завершить текущий докер-контейнер и удалить его:
 sudo docker stop golos1
