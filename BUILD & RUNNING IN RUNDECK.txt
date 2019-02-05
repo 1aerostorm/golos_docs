@@ -1,4 +1,4 @@
-﻿
+
 0. В первый раз необходимо установить ключи (см. файл INSTALLING KEYS FOR RUNDECK)
 
 1. После установки ключей (.ssh/id_rsa, .ssh/id_rsa.pub и .ssh/config) выполнить:

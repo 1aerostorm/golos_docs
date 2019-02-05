@@ -1,4 +1,4 @@
-Если нужен chain-test:
+﻿Если нужен chain-test:
 
 git submodule update --init --recursive -f
 
@@ -7,7 +7,6 @@ cd buildt
 cmake \
     -DCMAKE_BUILD_TYPE=Debug \
     -DBUILD_GOLOS_TESTNET=TRUE \
-    -DLOW_MEMORY_NODE=FALSE \
     -DMAX_19_VOTED_WITNESSES=TRUE \
     -DENABLE_MONGO_PLUGIN=FALSE \
     ..
@@ -24,7 +23,6 @@ cd buildt2 && \
 cmake \
     -DCMAKE_BUILD_TYPE=Debug \
     -DBUILD_GOLOS_TESTNET=TRUE \
-    -DLOW_MEMORY_NODE=FALSE \
     -DMAX_19_VOTED_WITNESSES=TRUE \
     -DENABLE_MONGO_PLUGIN=FALSE \
     ..

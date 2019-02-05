@@ -1,4 +1,4 @@
-0. Add its folder to /golos/plugins.
+﻿0. Add its folder to /golos/plugins.
 
 1. Add it to /golos/programs/golosd/CMakeLists.txt -> target_link_libraries, like this:
 ...

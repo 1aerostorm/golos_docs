@@ -1,0 +1,8 @@
+Worker proposal API functions #1025
+https://github.com/GolosChain/golos/pull/1044
+
+Get worker proposals by rshares #1082
+https://github.com/GolosChain/golos/pull/1084
+
+Worker techspec API functions #1026
+https://github.com/GolosChain/golos/pull/1086
