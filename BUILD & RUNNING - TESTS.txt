@@ -7,10 +7,11 @@ cd buildt
 cmake \
     -DCMAKE_BUILD_TYPE=Debug \
     -DBUILD_GOLOS_TESTNET=TRUE \
+    -DGOLOS_BUILD_TESTS=TRUE \
     -DMAX_19_VOTED_WITNESSES=TRUE \
     -DENABLE_MONGO_PLUGIN=FALSE \
     ..
-make -j$(nproc) chain_test
+make -j $(nproc) chain_test
 ./tests/chain_test --log_level=message --report_level=detailed
 echo $?
 
@@ -23,10 +24,11 @@ cd buildt2 && \
 cmake \
     -DCMAKE_BUILD_TYPE=Debug \
     -DBUILD_GOLOS_TESTNET=TRUE \
+    -DGOLOS_BUILD_TESTS=TRUE \
     -DMAX_19_VOTED_WITNESSES=TRUE \
     -DENABLE_MONGO_PLUGIN=FALSE \
     ..
-make -j$(nproc) plugin_test
+make -j $(nproc) plugin_test
 ./tests/plugin_test --log_level=message --report_level=detailed
 echo $?
 
